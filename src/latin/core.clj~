@@ -1,0 +1,72 @@
+(ns latin.core
+  (:gen-class))
+
+;; just a test to write Unicode to a file - it worked
+;; https://clojuredocs.org/clojure.java.io/writer
+;; http://docs.oracle.com/javase/7/docs/api/index.html?java/io/Writer.html
+
+(defn wr-file-str [fn s]
+  (with-open [of (clojure.java.io/writer fn :encoding "UTF-16")]
+    (.write of s))
+  )
+
+(defn writeln-str [of s]  ; given an already open file (java.io.Writer)...
+  (.write of (str s "\n")) )
+
+(def long_a "\u0101")
+(def long_i "\u012b")
+(def long_e "\u0113")
+(def long_o "\u014d")
+
+;; un-tested since I re-factored this
+(defn test-write [] 
+  ; (wr-file-str "test.txt" (str "so this, " long_a ", is a lower case 'a' with macron"))
+  )
+
+;; append to a file test
+(defn append-to-file [fn]
+  (with-open [of (clojure.java.io/writer fn :encoding "UTF-16" :append true)]
+    (.write of (str "at the end of the file, i w/ macron: " long_i))
+    ))
+
+(defn init-dictionary []
+  (let [beginning (str "pr" long_i "ncipium")
+        base (str "pr" long_i "ncipi")
+        begin_gen (str base long_i)]
+    (wr-file-str "dictionary.txt" (str "n. " beginning ", " begin_gen "\n"))
+    ))
+
+;; ultimate goal:
+;; read dictionary.txt
+;;   interim - for a verb, conjugate
+;;     for a noun, decline
+;; read translate.txt
+;;  for each word "search" for the match, print full declention or conjugation
+
+(defn -main
+  "I don't do a whole lot ... yet."
+  [& args]
+  (println "Initializing dicionary...")
+  (init-dictionary)
+  (println "adding entries...")
+  (with-open [wof (clojure.java.io/writer "dictionary.txt" :encoding "UTF-16" :append true)]
+    (let [i_say (str "d" long_i "c" long_o)
+          speak_stem (str "d" long_i "ce")
+          to_say (str speak_stem "re")
+          third_part (str "d" long_i "x" long_i) ; I have loved (??)
+          fourth_part (str "dictum")
+          i_do (str "ag" long_o)   ; I drive, I lead
+          drive_stem (str "age")
+          to_drive (str drive_stem "re")
+          do_3rd_part (str long_e "g" long_i)
+          do_4th_part (str long_a "ctum")
+          ]
+      (writeln-str wof (str "v. " i_do ", " to_drive ", " do_3rd_part ", " do_4th_part))
+      (writeln-str wof (str "v. " i_say ", " to_say ", " third_part ", " fourth_part))
+      ) ; end let
+    ) ; close (with-open)
+  )
+
+
+
+
