@@ -16,6 +16,8 @@
 
 ;; http://www.braveclojure.com/organization/
 
+(defprotocol ParseOps 
+  sting [_] )
 (defrecord ParseInfo [part    ; noun, verb, adj.
                       conj   ; of a verb  (1st, 2nd, 3rd, 3rd-io, i-stem, 4th )
                       decl    ; of a noun
