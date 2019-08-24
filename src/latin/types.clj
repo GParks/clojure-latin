@@ -16,8 +16,9 @@
 
 ;; http://www.braveclojure.com/organization/
 
-(defprotocol ParseOps 
-  sting [_] )
+(defprotocol ParseOps
+  string [_])
+
 (defrecord ParseInfo [part    ; noun, verb, adj.
                       conj   ; of a verb  (1st, 2nd, 3rd, 3rd-io, i-stem, 4th )
                       decl    ; of a noun
@@ -26,10 +27,9 @@
                       active     ; false = passive
                       indicitive  ; false = subjunctive
                       casum       ; (will clojure let me?) - nom., gen., acc.,
-                      engl     ; english
-                     ])
+                      engl])     ; english
+
 
 (defn test-pi
   (let [pi (-> ParseInfo :verb '3rd-io' nil false '1st' true true nil)]
-    )
-  )
+    (println "test-pi: pi = " pi)))

@@ -57,16 +57,16 @@
           drive_stem (str "age")          ; to do/to lead
           to_drive (str drive_stem "re")
           do_3rd_part (str long_e "g" long_i)  ; I have done/led
-          do_4th_part (str long_a "ctum")    ; having driven/done/led
-          ]
+          do_4th_part (str long_a "ctum")]    ; having driven/done/led
+
       ;; write two entries
       (writeln-str wof (str "v. " i_do ", " to_drive ", " do_3rd_part ", " do_4th_part
                             ", do, drive or lead"))
       (writeln-str wof (str "v. " i_say ", " to_say ", " third_part ", " fourth_part,
-                            ", speak, say or tell"))
-      ) ; end let
-    ) ; close (with-open)
-  )
+                            ", speak, say or tell")))))
+       ; end let
+     ; close (with-open)
+
 
 ; (defn pr-interp-v3 [fpsai stem fpsperf-inf supine english]
   ;; [1st|2nd|3rd] pers [sing.|pl.] present active
@@ -124,17 +124,17 @@
         w1 (subs fw (+ d 1))]
       (cond
         (= pos "v.")
-          (apply latin.conjugate/interp-verb w1 (map string/trim (rest ws)))
+        (apply latin.conjugate/interp-verb w1 (map string/trim (rest ws)))
         (= pos "n.")
-          ()
-      )
-    )
-  )
+        ())))
+
+
+
 
 (defn pr-interp-v
     "now moved to conjugate - no longer pr- to output"
-  [a b c d e]
-  )
+  [a b c d e])
+
 
 
 (defn pr-interp [ln]
@@ -146,54 +146,54 @@
         d (+ (.indexOf ln2 ".") 1)   ; find the dot (in "n." or "v." or even "adj.")
         pos (subs ln2 0 d)   ; Part Of Speech
         c1 (.indexOf ln2 "," d)   ; find the first comma
-        w1 (subs ln2 (+ d 1) c1)
-        ]
+        w1 (subs ln2 (+ d 1) c1)]
+
     (println "this line = " ln)
     ;; (println "\tpart of speech =" pos)
     ;; (println (str "\tword 2 is '" w2 "'"))
     (cond
       (= pos "v.")
       ;; process a verb
-        (let [c2 (.indexOf ln2 "," (+ c1 1))  w2 (subs ln2 (+ c1 2) c2)
-              c3 (.indexOf ln2 "," (+ c2 1))  w3 (subs ln2 (+ c2 2) c3)
-              c4 (.indexOf ln2 "," (+ c3 1))  w4 (subs ln2 (+ c3 2) c4)
-              e (subs ln2 (+ c4 2))
-              ]
-          ;; (println "\t''last'' comma at" c4)
-          (pr-interp-v w1 w2 w3 w4 e)
-          )
+      (let [c2 (.indexOf ln2 "," (+ c1 1))  w2 (subs ln2 (+ c1 2) c2)
+            c3 (.indexOf ln2 "," (+ c2 1))  w3 (subs ln2 (+ c2 2) c3)
+            c4 (.indexOf ln2 "," (+ c3 1))  w4 (subs ln2 (+ c3 2) c4)
+            e (subs ln2 (+ c4 2))]
+
+        ;; (println "\t''last'' comma at" c4)
+        (pr-interp-v w1 w2 w3 w4 e))
+
       (= pos "n.")
       (println "\ta noun")
       true
-      (println "unknown part of speech, '" pos "'") )
+      (println "unknown part of speech, '" pos "'"))))
 
-    ))
 
-(defn add-word [d es]
+
+(defn add-word [d es])
   ; given a dictionary and
   ; a list of entries
   ; insert these entries into the dictionary and return the [new] dictionary
-  )
+
 
 (defn load-dictionary
   ([d]
-  (with-open [dict (clojure.java.io/reader "dictionary.txt" :encoding "UTF-16")]
-    ;; (println (clojure.string/join ";\n" (line-seq dict)))
-    (doall  ; for eval of the lazy seq:
-     ;;(map pr-interp (line-seq dict)))
-     (reduce add-word d
-       (map
-         interp
-         (line-seq dict))
-       ))
-    ))
-    ;; if called with no arguments, re-call load-dict with initial, empty dictionary
-    ([] (load-dictionary (hash-map ))))
+   (with-open [dict (clojure.java.io/reader "dictionary.txt" :encoding "UTF-16")]
+     ;; (println (clojure.string/join ";\n" (line-seq dict)))
+     (doall  ; for eval of the lazy seq:
+      ;;(map pr-interp (line-seq dict)))
+      (reduce add-word d
+        (map
+          interp
+          (line-seq dict))))))
+
+
+     ;; if called with no arguments, re-call load-dict with initial, empty dictionary
+  ([] (load-dictionary (hash-map))))
 
 (defn translate [filename]
     (println "filename = " filename)
-    (load-dictionary)
-    )
+    (load-dictionary))
+
 
 (defn print-dictionary
   []
@@ -201,9 +201,9 @@
 
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "init a latin dictionary file; output, or (eventually) interpret."
   [& args]
-  (let [f (first args)]
+  (let [f (first args)])
   ;; (println (clojure.string/join ", " args))
   ;; (println "\t" (count args) " command line argument(s)")
   (cond (= f "init")  (reset)
@@ -211,6 +211,5 @@
                         (load-dictionary)
                         (print-dictionary))
         (= f "interpret") (translate (rest args))
-        (= f test) ()
-        true (println "default of -main cond\n\ttry 'init' or 'output'; better 'interpret [file]'")
-    )))
+        (= f "test") (typ/test-pi)
+        true (println "default of -main cond\n\ttry 'init' or 'output'; better 'interpret [file]'")))
