@@ -55,8 +55,6 @@
 (defn interp-v2 [fpsai stem fpsperf-inf supine english])
 
 
-
-
 (defn interp-verb [fpsai pres-inf fpsperf-inf supine & english]
   (let [e (subs fpsai (- (count fpsai) 2))   ; "end" of 1st sing active ind.
         stem (subs pres-inf 0 (max 0 (- (count pres-inf) 2)))   ;; remove "re" fr pres-inf to reveal the stem
