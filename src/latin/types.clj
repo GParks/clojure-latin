@@ -16,8 +16,8 @@
 
 ;; http://www.braveclojure.com/organization/
 
-(defprotocol ParseOps
-  string [_])
+;; (defprotocol ParseOps
+;;   string [_])
 
 (defrecord ParseInfo [part    ; noun, verb, adj.
                       conj   ; of a verb  (1st, 2nd, 3rd, 3rd-io, i-stem, 4th )
@@ -27,7 +27,24 @@
                       active     ; false = passive
                       indicitive  ; false = subjunctive
                       casum       ; (will clojure let me?) - nom., gen., acc.,
-                      engl])     ; english
+                      engl]
+      Object
+        toString [s]
+        (let [n (if
+                    (= part :noun)
+                  "noun"
+                  (if
+                      (= part :verb)
+                   "verb"
+                   "other"))
+               p (cond
+                    (= person :1st)  "first"
+                    (= person :2nd)  "second"
+                    (= person :3rd)  "third")]
+
+           (str p " person "
+                (if plural "plural " "singlular ")
+                n)))
 
 
 (defn test-pi

@@ -17,7 +17,7 @@
 ;; http://clojuredocs.org/clojure.core/map -
 ;;         "Returns a lazy sequence consisting of the result of applying f to the set
 ;;          of first items of each coll, followed by applying f to the set of second items
-;;          in each coll, until any one of the colls is exhausted.
+;;          in each coll, until any one of the colls is exhausted."
 ;;
 
 ;; just a test to write Unicode to a file - it worked
@@ -129,12 +129,9 @@
         ())))
 
 
-
-
 (defn pr-interp-v
     "now moved to conjugate - no longer pr- to output"
   [a b c d e])
-
 
 
 (defn pr-interp [ln]
