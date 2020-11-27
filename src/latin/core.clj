@@ -1,5 +1,5 @@
 (ns latin.core
-  (:gen-class))
+ (:gen-class))
 
 ; (use '[clojure.string :only (split join trim)])
 (require '[clojure.string :as string])
@@ -54,7 +54,7 @@
           fourth_part (str "dictum")     ; "having been [loved]" - supine
 
           i_do (str "ag" long_o)        ; I drive, I lead
-          drive_stem (str "age")          ; to do/to lead
+          drive_stem "age"          ; to do/to lead
           to_drive (str drive_stem "re")
           do_3rd_part (str long_e "g" long_i)  ; I have done/led
           do_4th_part (str long_a "ctum")]    ; having driven/done/led
@@ -200,13 +200,14 @@
 (defn -main
   "init a latin dictionary file; output, or (eventually) interpret."
   [& args]
-  (let [f (first args)])
+  (let [f (first args)]
   ;; (println (clojure.string/join ", " args))
   ;; (println "\t" (count args) " command line argument(s)")
-  (cond (= f "init")  (reset)
-        (= f "output") (do
-                        (load-dictionary)
-                        (print-dictionary))
-        (= f "interpret") (translate (rest args))
-        (= f "test") (typ/test-pi)
-        true (println "default of -main cond\n\ttry 'init' or 'output'; better 'interpret [file]'")))
+   (cond (= f "init")  (reset)
+         (= f "output") (do
+                         (load-dictionary)
+                         (print-dictionary))
+         (= f "interpret") (translate (rest args))
+         (= f "test")  (typ/test-pi)
+         true
+          (println "default of -main cond\n\ttry 'init' or 'output'; better 'interpret [file]'"))))

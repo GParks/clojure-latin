@@ -28,8 +28,12 @@
                       indicitive  ; false = subjunctive
                       casum       ; (will clojure let me?) - nom., gen., acc.,
                       engl]
-      Object
-        toString [s]
+
+     Object
+       ;;  learned: `(println pi)` just prints the "raw" value:
+       ;;    (e.g. " #latin.types.ParseInfo{:part " ... " :engl english defn}")
+       ;;  while `(str pi)` calls this fn
+       (toString [s]
         (let [n (if
                     (= part :noun)
                   "noun"
@@ -44,9 +48,20 @@
 
            (str p " person "
                 (if plural "plural " "singlular ")
-                n)))
+                n))))
 
 
-(defn test-pi
-  (let [pi (-> ParseInfo :verb '3rd-io' nil false '1st' true true nil)]
-    (println "test-pi: pi = " pi)))
+(defn test-pi [part-of-speech  ;; symbol! :noun, :verb, :adj, :adv, :prep, etc.
+               plural-p        ;; false for singular (applies to both nouns and verbs, ignored for prepositions...)
+              & {:keys [person    ;; :1st, :2nd or :3rd
+                        conj      ;; conjugation (of a verb)
+                        decl      ;; declention (of a noun or adj.)
+                        active-p  ;; active or passive (verb)
+                        indic-p   ;; indicitive (verb)
+                        casum     ;; :nom, :gen, :accus, :___, :ablat
+                        ]}
+                 :or []}]
+  (let [pi (->ParseInfo :verb "3rd-io" nil false :1st true true nil "english defn")
+        ]
+    (println "test-pi: pi = " (str pi))
+  ))
